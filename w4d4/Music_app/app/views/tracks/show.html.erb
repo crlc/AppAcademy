@@ -1,0 +1,28 @@
+<H1><%= @track.song %></H1>
+
+<%= render 'shared/errors' %>
+
+<%= link_to "Album", album_url(@track.album_id) %><br>
+<%= link_to "Edit", edit_track_url %>
+<%= button_to "Delete", track_url(@track.id), method: :delete %>
+
+<ul>
+  <li>Band: <%= @track.album.band.name %></li>
+  <li>Album: <%= @track.album.title %></li><br>
+
+  <label>Lyrics:
+    <p><%= @track.lyrics %></p>
+  </label><br>
+
+  <label>Notes:
+    <% @notes.each do |note| %>
+      <p><%= User.find(note.user_id).email %>: <%= note.notes %></p>
+      <%= button_to "Delete", track_note_url(track_id: @track.id, id: @note.id), method: :delete %>
+    <% end %>
+  </label><br>
+
+  <label>
+    <p><%= render 'notes/form' %>
+    </p>
+  </label>
+</ul>

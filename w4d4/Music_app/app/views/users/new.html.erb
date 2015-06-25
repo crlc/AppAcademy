@@ -1,0 +1,19 @@
+<%= link_to "Log In", new_session_url, method: :get %>
+
+<H1>New User</H1>
+
+<%= render "shared/errors" %>
+
+<form action="<%= users_url %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label>Email:
+    <input type="text" name="user[email]" value="<%= @user.email %>">
+  </label>
+
+  <label>Password:
+    <input type="password" name="user[password]" value="">
+  </label>
+
+  <input type="submit" value="Sign Up!">
+</form>

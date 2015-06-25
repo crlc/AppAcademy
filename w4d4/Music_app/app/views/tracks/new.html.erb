@@ -1,0 +1,48 @@
+<% action = @track.id.nil? ? tracks_url : track_url(@track.id) %>
+<% method = @track.id.nil? ? 'post' : 'patch' %>
+<% task = @track.id.nil? ? 'Create Track' : 'Edit Track' %>
+
+<H1><%= task %></H1>
+
+<%= render "shared/errors" %>
+
+<form action="<%= action %>" method="post">
+  <input type="hidden" name="_method" value="<%= method %>">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label>Album:
+    <select name="track[album_id]">
+      <% @albums.each do |album| %>
+        <option
+          value="<%= album.id %>"
+          <%= 'selected' if album.id == @track.album_id %>
+        ><%= album.title %></option>
+      <% end %>
+    </select>
+  </label><br>
+  <label>Song:
+    <input type="text" name="track[song]" value="<%= @track.song %>">
+  </label><br>
+  <label>
+    <input
+      type="radio"
+      name="track[side]"
+      value="regular"
+      <%= 'checked' if @track.side == 'regular' %>
+      >
+    Regular
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="track[side]"
+      value="bonus"
+      <%= 'checked' if @track.side == 'bonus' %>
+    >
+    Bonus
+  </label><br>
+  <label>Lyrics:<br>
+    <textarea name="track[lyrics]" rows="8" cols="40"><%= @track.lyrics %></textarea>
+  </label><br>
+  <input type="submit" value="<%= task %>">
+</form>

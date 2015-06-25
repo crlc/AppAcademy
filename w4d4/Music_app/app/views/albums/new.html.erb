@@ -1,0 +1,45 @@
+<% action = @album.id.nil? ? albums_url : album_url(@album.id) %>
+<% method = @album.id.nil? ? 'post' : 'patch' %>
+<% task = @album.id.nil? ? 'Create Album' : 'Edit Album' %>
+
+<H1><%= task %></H1>
+
+<%= render "shared/errors" %>
+
+<form action="<%= action %>" method="post">
+  <input type="hidden" name="_method" value="<%= method %>">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label>Band:
+    <select name="album[band_id]">
+      <% @bands.each do |band| %>
+        <option
+          value="<%= band.id %>"
+          <%= 'selected' if band.id == @album.band_id %>
+        ><%= band.name %></option>
+      <% end %>
+    </select>
+  </label>
+  <label>Title:
+    <input type="text" name="album[title]" value="<%= @album.title %>">
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="album[recorded]"
+      value="studio"
+      <%= 'checked' if @album.recorded == 'studio' %>
+      >
+    Studio
+  </label>
+  <label>
+    <input
+      type="radio"
+      name="album[recorded]"
+      value="live"
+      <%= 'checked' if @album.recorded == 'live' %>
+    >
+    Live
+  </label>
+  <input type="submit" value="<%= task %>">
+</form>

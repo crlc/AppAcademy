@@ -1,0 +1,7 @@
+<% boards.each(function (board) { %>
+  <ul>
+    <a href="#/api/boards/<%= board.id %>"><%= board.escape("title") %></a>
+    <button class="delete" data-id="<%= board.id %>">Delete</button>
+  </ul>
+<% }) %>
+<a href="#/api/boards/new">Create a board</a>
